@@ -24,10 +24,17 @@ namespace XulambsFoods_2025_1.src {
             _aberto = true;
         }
 
-        private bool PodeAdicionar() {
+        public bool PodeAdicionar() {
             return _aberto;
         }
 
+        /// <summary>
+        /// Adiciona uma pizza ao pedido, caso ele esteja aberto.
+        /// Caso contrário, ignora a operação Retorna a quantidade
+        /// de pizzas no pedido ao final da execução.
+        /// </summary>
+        /// <param name="pizza">A pizza a ser incluída no pedido</param>
+        /// <returns>A quantidade de pizzas do pedido</returns>
         public int Adicionar(Pizza pizza) {
             if (PodeAdicionar()) {
                 _pizzas[_quantPizzas] = pizza;
@@ -49,13 +56,19 @@ namespace XulambsFoods_2025_1.src {
         }
 
         public string Relatorio() {
-            StringBuilder relat = new StringBuilder($"Pedido {_idPedido} - {_data}\n");
+            StringBuilder relat = new StringBuilder($"Pedido nº{_idPedido:D2} - {_data} - ");
+            relat.AppendLine(_aberto ? "ABERTO" : "FECHADO");
             relat.AppendLine("==============================");
             for (int i = 0; i < _quantPizzas; i++) {
-                relat.AppendLine(_pizzas[i].NotaDeCompra());
+                relat.AppendLine($"{(i+1):D2} - {_pizzas[i].NotaDeCompra()}");
             }
-            relat.Append($"Valor a pagar: {PrecoAPagar():C2}");
+            relat.AppendLine($"\nValor a pagar: {PrecoAPagar():C2}");
+            relat.AppendLine("==============================");
             return relat.ToString();
+        }
+
+        public int GetID() {
+            return _idPedido;
         }
     }
 }
