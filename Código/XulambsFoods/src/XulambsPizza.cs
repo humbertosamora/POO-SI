@@ -10,7 +10,7 @@ namespace XulambsFoods_2025_1.src {
 
         static void Cabecalho() {
             Console.Clear();
-            Console.WriteLine("XULAMBS PIZZA v0.2\n==================================");
+            Console.WriteLine("XULAMBS PIZZA v0.3\n==================================");
         }
 
         static void Pausa() {
@@ -29,20 +29,43 @@ namespace XulambsFoods_2025_1.src {
             return int.Parse(Console.ReadLine());
         }
 
-        static int ExibirMenuLocalizacao() {
-            Cabecalho();
-            Console.WriteLine("Localizando o pedido");
-            Console.Write("Digite o número do pedido: ");
-            return int.Parse(Console.ReadLine());
-        }
-
         static Pedido AbrirPedido() {
-            Pedido novo = new Pedido();
-            IncluirPizza(novo);
+            Pedido novo = EscolherTipoPedido();
+            AdicionarPizza(novo);
             return novo;
         }
 
-        static void IncluirPizza(Pedido pedido) {
+        static Pedido EscolherTipoPedido()
+        {
+            int opcao = ExibirMenuTipoPedido();
+            return opcao switch {
+                2 => CriarPedidoEntrega(),
+                1 or _ => CriarPedidoLocal()
+            };
+        }
+
+        static int ExibirMenuTipoPedido()
+        {
+            Cabecalho();
+            Console.WriteLine("Escolha o tipo de pedido:");
+            Console.WriteLine("1 - Local (padrão)");
+            Console.WriteLine("2 - Pedido para entrega");
+            Console.Write("Sua opção: ");
+            return int.Parse(Console.ReadLine());
+        }
+
+        static Pedido CriarPedidoLocal() {
+            return new Pedido();
+        }
+
+        static Pedido CriarPedidoEntrega() {
+            Console.WriteLine("Pedido para Entregal");
+            Console.Write("Distância: ");
+            double distancia = double.Parse(Console.ReadLine());
+            return new PedidoEntrega(distancia);
+        }
+
+        static void AdicionarPizza(Pedido pedido) {
             string conf;
             do {
                 Pizza novaPizza = ComprarPizza();
@@ -116,19 +139,20 @@ namespace XulambsFoods_2025_1.src {
 
         static Pedido AlterarPedido() {
             Pedido localizado = LocalizarPedido();
-
             if (localizado == null) {
                 Console.WriteLine("Pedido não localizado.");
             }
             else {
-                IncluirPizza(localizado);
+                AdicionarPizza(localizado);
             }
-
             return localizado;
         }
 
         static Pedido LocalizarPedido() {
-            int idPedido = ExibirMenuLocalizacao();
+            Cabecalho();
+            Console.WriteLine("Localizando o pedido");
+            Console.Write("Digite o número do pedido: ");
+            int idPedido = int.Parse(Console.ReadLine());
             Pedido buscado = null;
 
             for(int i = 0; i < _quantPedidos && buscado == null; i++) {
@@ -139,7 +163,7 @@ namespace XulambsFoods_2025_1.src {
             return buscado;
         }
         
-        static void MostrarRelatorio() {
+        static void RelatorioDoPedido() {
             Pedido buscado = LocalizarPedido();
 
             if (buscado == null) {
@@ -162,6 +186,7 @@ namespace XulambsFoods_2025_1.src {
               MostrarPedido(buscado);
             }
         }
+
         static void Main(string[] args) {
             int opcao = -1;
             do {
@@ -177,7 +202,7 @@ namespace XulambsFoods_2025_1.src {
                         MostrarPedido(alterado);
                         break;
                     case 3:
-                        MostrarRelatorio();
+                        RelatorioDoPedido();
                         break;
                     case 4:
                         FecharPedido();

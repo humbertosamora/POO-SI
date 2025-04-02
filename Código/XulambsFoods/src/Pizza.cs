@@ -48,7 +48,7 @@ namespace XulambsFoods_2025_1.src {
 
         private const int MaxIngredientes = 8;
         private const string Descricao = "Pizza";
-	    private const double PrecoBase = 29d;
+	      private const double PrecoBase = 29d;
         private const double ValorAdicional = 5d;
         [JsonInclude]
         private int _quantidadeIngredientes;
@@ -66,7 +66,7 @@ namespace XulambsFoods_2025_1.src {
        /// Construtor padrão.Cria uma pizza sem adicionais.
        /// </summary>
         public Pizza() {
-            init(0);            
+            init(0);
         }
 
         /// <summary>
