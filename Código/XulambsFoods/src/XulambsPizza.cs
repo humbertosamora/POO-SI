@@ -10,7 +10,7 @@ namespace XulambsFoods_2025_1.src {
 
         static void Cabecalho() {
             Console.Clear();
-            Console.WriteLine("XULAMBS PIZZA v0.2\n==============================");
+            Console.WriteLine("XULAMBS PIZZA v0.2\n==================================");
         }
 
         static void Pausa() {
@@ -119,9 +119,6 @@ namespace XulambsFoods_2025_1.src {
 
             if (localizado == null) {
                 Console.WriteLine("Pedido não localizado.");
-            }
-            else if (!localizado.PodeAdicionar()) {
-                Console.WriteLine("Pedido já foi finalizdo.");
             }
             else {
                 IncluirPizza(localizado);
