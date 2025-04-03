@@ -117,14 +117,14 @@ namespace XulambsFoods_2025_1.src {
 
         static void MostrarNota(Pizza pizza) {
             Console.WriteLine("Comprando: ");
-            Console.WriteLine(pizza.NotaDeCompra());
+            Console.WriteLine(pizza);
 
         }
 
         static void MostrarPedido(Pedido pedido) {
             if (pedido != null) {
                 Cabecalho();
-                Console.WriteLine(pedido.Relatorio());
+                Console.WriteLine(pedido);
             }
         }
 
@@ -156,7 +156,7 @@ namespace XulambsFoods_2025_1.src {
             Pedido buscado = null;
 
             for(int i = 0; i < _quantPedidos && buscado == null; i++) {
-              if (_pedidos[i].GetID() == idPedido) {
+              if (_pedidos[i].GetHashCode() == idPedido) {
                 buscado = _pedidos[i];
               }
             }

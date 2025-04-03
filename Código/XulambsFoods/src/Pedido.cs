@@ -92,20 +92,28 @@ namespace XulambsFoods_2025_1.src {
             relat.AppendLine(_aberto ? "ABERTO" : "FECHADO");
             relat.AppendLine("==================================");
             for (int i = 0; i < _quantPizzas; i++) {
-                relat.AppendLine($"{(i+1):D2} - {_pizzas[i].NotaDeCompra()}");
+                relat.AppendLine($"{(i+1):D2} - {_pizzas[i]}");
             }
             return relat.ToString();
         }
 
-        public virtual string Relatorio() {
+        public override string? ToString() {
             StringBuilder relat = new StringBuilder($"Pedido Local {DetalhamentoPedido()}");
             relat.AppendLine($"\nValor a pagar: {PrecoAPagar():C2}");
             relat.AppendLine("==================================");
             return relat.ToString();
         }
 
-        public int GetID() {
+        public override int GetHashCode() {
             return _idPedido;
+        }
+
+        public override bool Equals(Object? obj)
+        {
+            Pedido p = obj as Pedido;
+            return p != null &&
+                   ((Pedido)obj)._idPedido == _idPedido &&
+                   ((Pedido)obj)._data.Equals(_data);
         }
     }
 }
